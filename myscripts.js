@@ -44,6 +44,7 @@ function game() {
     for (let i = 0; i < 5; i++) {
     let playerSelection = prompt("Pierre, Feuille ou Ciseaux ?" , 'Ecris ton choix').toLowerCase(); // Permet au joueur d'entrer son choix
     let computerSelection = computerPlay();
+    alert("L'ordinateur choisit" + " " + computerSelection + ".");
     result = playRound(playerSelection, computerSelection);
     scoreboard = "Humain :" + " " + playerScore + " " + "VS" + " " + "Machine :" + " " + computerScore; // Affichage du score
     console.log(scoreboard)
@@ -63,6 +64,6 @@ function game() {
         alert("Gagné! Félicitations!");
     }
 }
-
+ 
 // Lance le jeu
 game();
