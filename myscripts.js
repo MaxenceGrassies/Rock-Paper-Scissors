@@ -1,17 +1,32 @@
-let choice = ["pierre", "feuille", "ciseaux"];
+const buttons = document.querySelectorAll(".btn");
 let playerScore = 0;
 let computerScore = 0;
 
+// A chaque clique
+buttons.forEach((button) => {
+  button.addEventListener("click", function () {
+
+// Choix du joueur
+    const playerSelection = this.textContent.toLowerCase();
+
 // Détermine le choix de l'ordinateur
-function computerPlay() {
-    return choice[Math.floor(Math.random()*choice.length)];
-}
+    const choice = ["pierre", "feuille", "ciseaux"];
+    const computerSelection = choice[Math.floor(Math.random()*choice.length)];
+    alert("L'ordinateur choisit" + " " + computerSelection + ".");
 
-// Paramètres
-let computerSelection = computerPlay();
-const playerSelection = ["pierre", "feuille", "ciseaux"];
+// Lance un round
+    playRound(playerSelection, computerSelection);
+   
+// Annone qui gagne la manche et met à jour le score 
+    updateScore();
+    if (checkWinner()) {
+      playerScore = computerScore = 0;
+      updateScore();
+    }
+  });
+});
 
- // Un round du jeu
+ // Un round de jeu
 function playRound(playerSelection, computerSelection) {
    
     if (playerSelection == computerSelection) {
@@ -37,33 +52,25 @@ function playRound(playerSelection, computerSelection) {
     } else {
         alert("HEIN???");
     }
-}
 
-// Lance le jeu pour 5 rounds
-function game() {
-    for (let i = 0; i < 5; i++) {
-    let playerSelection = prompt("Pierre, Feuille ou Ciseaux ?" , 'Ecris ton choix').toLowerCase(); // Permet au joueur d'entrer son choix
-    let computerSelection = computerPlay();
-    alert("L'ordinateur choisit" + " " + computerSelection + ".");
-    result = playRound(playerSelection, computerSelection);
-    scoreboard = "Humain :" + " " + playerScore + " " + "VS" + " " + "Machine :" + " " + computerScore; // Affichage du score
-    console.log(scoreboard)
-    alert(scoreboard)
-    console.log(result); // Donne le score à chaque round
-    }
+};
 
-// Déqigne le vainqueur
-    if (playerScore < computerScore) {
-        console.log("GAME OVER");
-        alert("GAME OVER");
-    } else if (playerScore == computerScore) {
-        console.log("Egalité, recommence!")
-        alert("Egalité, recommence!");
-    } else {
-        console.log("Gagné! Félicitations!");
-        alert("Gagné! Félicitations!");
-    }
-}
- 
-// Lance le jeu
-game();
+// Affiche le score
+function updateScore() {
+  document.getElementById("p-score").textContent = playerScore;
+  document.getElementById("c-score").textContent = computerScore;
+};
+
+// Annonce le vainqueur
+function checkWinner() {
+  if (playerScore === 5 || computerScore === 5) {
+    const winner =
+      playerScore === 5
+        ? "Tu as gagné! Félicitations!"
+        : "GAME OVER, recommence !";
+    alert(winner);
+    return true;
+  }
+  return false;
+};
+
